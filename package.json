@@ -1,0 +1,17 @@
+{
+  "name": "craftmind-herding",
+  "version": "1.0.0",
+  "description": "MIST-inspired Minecraft herding mod — AI sheepdogs tending flocks through pastoral voxel landscapes",
+  "type": "module",
+  "main": "src/herding-dog.js",
+  "scripts": {
+    "test": "node tests/test-all.js",
+    "demo": "node examples/herd-demo.js"
+  },
+  "keywords": ["minecraft", "mineflayer", "herding", "sheepdog", "ai", "boids"],
+  "license": "MIT",
+  "dependencies": {
+    "mineflayer": "^4.20.0",
+    "vec3": "^0.1.10"
+  }
+}
