@@ -188,3 +188,179 @@ export class ComboTracker {
     };
   }
 }
+
+/** Leaderboard entry. */
+class LeaderboardEntry {
+  constructor(playerName, courseName, scoreData, timestamp = Date.now()) {
+    this.playerName = playerName;
+    this.courseName = courseName;
+    this.score = scoreData.overall;
+    this.scoreData = scoreData;
+    this.timestamp = timestamp;
+  }
+
+  toJSON() {
+    return {
+      playerName: this.playerName,
+      courseName: this.courseName,
+      score: this.score,
+      scoreData: this.scoreData,
+      timestamp: this.timestamp,
+    };
+  }
+
+  static fromJSON(data) {
+    return new LeaderboardEntry(
+      data.playerName,
+      data.courseName,
+      data.scoreData,
+      data.timestamp
+    );
+  }
+}
+
+/** Leaderboard persistence system. */
+export class Leaderboard {
+  constructor() {
+    this.entries = [];
+    this.maxEntries = 100;  // Keep top 100 per course
+    this.storageKey = 'craftmind_herding_leaderboard';
+  }
+
+  /** Load leaderboard from localStorage (or file system in Node). */
+  load() {
+    try {
+      // Try localStorage first (browser)
+      if (typeof localStorage !== 'undefined') {
+        const data = localStorage.getItem(this.storageKey);
+        if (data) {
+          const parsed = JSON.parse(data);
+          this.entries = parsed.map(e => LeaderboardEntry.fromJSON(e));
+        }
+      } else {
+        // Node.js - could read from file here
+        // For now, start fresh
+        this.entries = [];
+      }
+    } catch (error) {
+      console.warn('Failed to load leaderboard:', error.message);
+      this.entries = [];
+    }
+    return this;
+  }
+
+  /** Save leaderboard to localStorage (or file system in Node). */
+  save() {
+    try {
+      const data = JSON.stringify(this.entries);
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem(this.storageKey, data);
+      } else {
+        // Node.js - could write to file here
+        // For now, just serialize to JSON
+      }
+    } catch (error) {
+      console.warn('Failed to save leaderboard:', error.message);
+    }
+    return this;
+  }
+
+  /** Record a new score. */
+  recordScore(playerName, courseName, scoreData) {
+    const entry = new LeaderboardEntry(playerName, courseName, scoreData);
+    this.entries.push(entry);
+
+    // Sort by score (descending) and keep only top entries per course
+    this.entries.sort((a, b) => b.score - a.score);
+
+    // Trim to max entries per course
+    const courseGroups = new Map();
+    for (const e of this.entries) {
+      const key = e.courseName;
+      if (!courseGroups.has(key)) {
+        courseGroups.set(key, []);
+      }
+      if (courseGroups.get(key).length < this.maxEntries) {
+        courseGroups.get(key).push(e);
+      }
+    }
+
+    // Flatten back to entries array
+    this.entries = [];
+    for (const group of courseGroups.values()) {
+      this.entries.push(...group);
+    }
+
+    this.save();
+    return entry;
+  }
+
+  /** Get leaderboard for a specific course. */
+  getLeaderboard(courseName, limit = 10) {
+    return this.entries
+      .filter(e => e.courseName === courseName)
+      .slice(0, limit);
+  }
+
+  /** Get top scores across all courses. */
+  getTopScores(limit = 10) {
+    return this.entries.slice(0, limit);
+  }
+
+  /** Get player's best scores. */
+  getPlayerScores(playerName, limit = 10) {
+    return this.entries
+      .filter(e => e.playerName === playerName)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, limit);
+  }
+
+  /** Get player's best score for a specific course. */
+  getPlayerBest(playerName, courseName) {
+    const scores = this.entries.filter(e =>
+      e.playerName === playerName && e.courseName === courseName
+    );
+    return scores.length > 0 ? scores[0] : null;
+  }
+
+  /** Check if a new score is a personal best. */
+  isPersonalBest(playerName, courseName, score) {
+    const best = this.getPlayerBest(playerName, courseName);
+    return !best || score > best.score;
+  }
+
+  /** Get ranking for a score on a course. */
+  getRank(courseName, score) {
+    const courseScores = this.getLeaderboard(courseName);
+    for (let i = 0; i < courseScores.length; i++) {
+      if (score >= courseScores[i].score) {
+        return i + 1;
+      }
+    }
+    return courseScores.length + 1;
+  }
+
+  /** Clear all entries (for testing). */
+  clear() {
+    this.entries = [];
+    this.save();
+    return this;
+  }
+
+  /** Get statistics. */
+  getStats() {
+    const totalScores = this.entries.length;
+    const uniquePlayers = new Set(this.entries.map(e => e.playerName)).size;
+    const courses = new Set(this.entries.map(e => e.courseName));
+
+    return {
+      totalScores,
+      uniquePlayers,
+      courseCount: courses.size,
+      courses: Array.from(courses),
+    };
+  }
+}
+
+/** Create a global leaderboard instance. */
+export const globalLeaderboard = new Leaderboard().load();
