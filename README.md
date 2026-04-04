@@ -1,122 +1,55 @@
-# 🐾 CraftMind Herding
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Lucineer/capitaine/master/docs/capitaine-logo.jpg" alt="Capitaine" width="120">
+</p>
 
-> AI sheepdog simulation — watch intelligent dogs herd flocks through pastoral landscapes.
+<h1 align="center">craftmind-herding</h1>
 
-## Features
+<p align="center">Border Collie agents commanded by cowboy players.</p>
 
-- **Boid Flocking** — Realistic animal group behavior (separation, alignment, cohesion)
-- **Herding Dog AI** — 4 skill levels (apprentice → elder) with increasing abilities
-- **5 Personality Types** — Patient, energetic, steady, clever, aggressive
-- **Script Engine** — Stochastic behavior scripts for each dog, enabling varied herding styles
-- **4 Dog Personalities** — Rex (bold leader), Biscuit (gentle herder), Thunder (high-energy), Old Blue (steady veteran)
-- **Cross-Game Patterns** — Shared behavior script format with CraftMind Fishing's personality system
-- **Multi-Dog Teams** — Coordinate multiple dogs for complex herding tasks
-- **Scoring System** — Combo chains, time bonuses, efficiency ratings
-- **Seasonal System** — Weather and terrain effects across 4 seasons
-- **Teaching Progression** — Structured learning with tips at each level
-- **Terrain & Pastures** — Rivers, hills, fences, and obstacles
-- **5 Herding Courses** — Progressive challenges from beginner to expert
+---
 
-## Quick Start
+**CraftMind ecosystem** · Part of the [Lucineer fleet](https://github.com/orgs/Lucineer/repositories)
 
-```bash
-npm install
-node examples/demo.js    # Run standalone demo
-node scripts/playtest.js # Simulated plugin test
-npm test                 # Run test suite (37 tests)
-```
+## The Fleet
 
-## API Documentation
 
-### HerdingDog (`src/herding-dog.js`)
-| Property/Method | Description |
-|---|---|
-| `new HerdingDog({bot, level, personality})` | Create a dog |
-| `dog.level` | Current skill level string |
-| `dog.energy` | Current energy (0-max) |
-| `dog.personality` | Personality config object |
-| `dog.herd(flock, target)` | Execute herding command |
+<details>
+<summary><strong>⚓ The Fleet</strong></summary>
 
-### Flock (`src/flock.js`)
-| Property/Method | Description |
-|---|---|
-| `new Flock({count, animalType})` | Create a flock |
-| `flock.animals` | Array of Animal instances |
-| `flock.formation` | Current formation type |
+**Flagship vessels**
 
-### Key Exports
-| Export | Description |
-|---|---|
-| `SKILL_LEVELS` | Config for each level |
-| `PERSONALITIES` | 5 personality presets |
-| `ANIMAL_TYPES` | Available animal configs |
-| `COURSES` | 5 herding courses |
+- [cocapn.ai](https://github.com/Lucineer/capitaine)
+- [personallog.ai](https://github.com/Lucineer/personallog-ai)
+- [businesslog.ai](https://github.com/Lucineer/businesslog-ai)
+- [studylog.ai](https://github.com/Lucineer/studylog-ai)
+- [makerlog.ai](https://github.com/Lucineer/makerlog-ai)
+- [playerlog.ai](https://github.com/Lucineer/playerlog-ai)
+- [dmlog.ai](https://github.com/Lucineer/dmlog-ai)
+- [reallog.ai](https://github.com/Lucineer/reallog-ai)
+- [deckboss.ai](https://github.com/Lucineer/deckboss-ai)
 
-## Plugin Integration
+**Fleet services**
 
-```js
-import { registerWithCore } from 'craftmind-herding';
-registerWithCore(core); // Registers as 'herding' plugin
-```
+- [Fleet Catalog](https://github.com/Lucineer/capitaine/blob/master/docs/fleet/FLEET.md)
+- [Git Agent (full)](https://github.com/Lucineer/git-agent)
+- [Cocapn Lite (minimal)](https://github.com/Lucineer/cocapn-lite)
+- [Fleet Orchestrator](https://github.com/Lucineer/fleet-orchestrator)
+- [Dead Reckoning Engine](https://github.com/Lucineer/dead-reckoning-engine)
+- [Dream Engine](https://github.com/Lucineer/dream-engine)
+- [Seed UI (5 layers)](https://github.com/Lucineer/seed-ui)
 
-## Architecture
+**For power users**
 
-```
-┌──────────────────────────────────────────────────┐
-│               CraftMind Herding                   │
-├──────────────────────────────────────────────────┤
-│  ┌──────────┐  ┌───────────┐  ┌──────────────┐ │
-│  │   Dog    │  │  Flock    │  │   Terrain    │ │
-│  │  AI      │→ │ (Boids)   │→ │   Analyzer   │ │
-│  │ (4 lvl)  │  │           │  │              │ │
-│  └────┬─────┘  └─────┬─────┘  └──────┬───────┘ │
-│       │              │               │         │
-│       ▼              ▼               ▼         │
-│  ┌──────────────────────────────────────────┐   │
-│  │         Herding Simulation               │   │
-│  │  Command → Approach → Drive → Pen        │   │
-│  └──────────────────┬───────────────────────┘   │
-│                     │                           │
-│  ┌──────────┐ ┌─────┴──────┐ ┌────────────┐   │
-│  │ Seasons  │ │  Multi-Dog │ │  Scoring   │   │
-│  │ System   │ │  Team      │ │  Engine    │   │
-│  └──────────┘ └────────────┘ └────────────┘   │
-│                                                  │
-│  ┌─────────────┐  ┌──────────────────────────┐  │
-│  │  Teachings  │  │       Courses            │  │
-│  │   System    │  │  (5 progressive levels)  │  │
-│  └─────────────┘  └──────────────────────────┘  │
-├──────────────────────────────────────────────────┤
-│              registerWithCore(core)              │
-└──────────────────────────────────────────────────┘
-```
+- [Cocapn Lite (tabula rasa)](https://github.com/Lucineer/cocapn-lite)
+- [Cocapn (core platform)](https://github.com/Lucineer/cocapn)
+- [ZeroClaw (framework)](https://github.com/Lucineer/zeroclaw)
 
-## Testing
+[View all 106 repos →](https://github.com/orgs/Lucineer/repositories)
+[Fleet manifest →](https://github.com/Lucineer/capitaine/blob/master/docs/fleet/FLEET.md)
 
-```bash
-npm test          # 37 tests
-node examples/demo.js
-node scripts/playtest.js
-```
+</details>
 
-## Roadmap
-
-See [ROADMAP.md](./ROADMAP.md) for detailed plans.
-
-## CraftMind Ecosystem
-
-| Repo | Description |
-|------|-------------|
-| [craftmind](https://github.com/CedarBeach2019/craftmind) | 🤖 Core bot framework |
-| [craftmind-fishing](https://github.com/CedarBeach2019/craftmind-fishing) | 🎣 Sitka Sound fishing RPG |
-| [craftmind-studio](https://github.com/CedarBeach2019/craftmind-studio) | 🎬 AI filmmaking engine |
-| [craftmind-courses](https://github.com/CedarBeach2019/craftmind-courses) | 📚 In-game learning system |
-| [craftmind-researcher](https://github.com/CedarBeach2019/craftmind-researcher) | 🔬 AI research assistant |
-| [**craftmind-herding**](https://github.com/CedarBeach2019/craftmind-herding) | 🐑 Livestock herding AI |
-| [craftmind-circuits](https://github.com/CedarBeach2019/craftmind-circuits) | ⚡ Redstone circuit design |
-| [craftmind-ranch](https://github.com/CedarBeach2019/craftmind-ranch) | 🌾 Genetic animal breeding |
-| [craftmind-discgolf](https://github.com/CedarBeach2019/craftmind-discgolf) | 🥏 Disc golf simulation |
 
 ## License
 
-MIT
+MIT · Superinstance & Lucineer (DiGennaro et al.)
