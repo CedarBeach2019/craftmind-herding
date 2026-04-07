@@ -1,59 +1,41 @@
-# Craftmind Herding
+# Craftmind Herding: AI Sheepdogs That Learn 🐑
 
-A herding simulation where AI sheepdogs, guided by player commands, manage flocks of sheep in a Minecraft environment. Train and observe autonomous agents that develop skills and exhibit distinct personalities through emergent, unscripted behavior.
+You watch quiet border collie agents develop. No pre-written herding paths are provided. No training datasets are uploaded. They learn through trial and error, right here on the edge, as you observe.
 
----
-
-## Purpose
-
-This project provides a sandbox to experiment with multi-agent AI systems in a tangible, observable way. Adjust individual agent parameters and immediately see the effects on group dynamics and task performance within a simulated environment.
-
-## How It Operates
-
-*   Hosted entirely on Cloudflare Workers. No local installation, GPUs, or complex dependencies required.
-*   Fork-first development. You are encouraged to copy, modify, and run your own version.
-*   Transparent logic. All agent decision-making is implemented in readable, open code.
-*   Built for the Cocapn Fleet, an open-source agent runtime.
-
-**Live Instance:** https://the-fleet.casey-digennaro.workers.dev
-Join an active session or deploy your own agent directly from the interface.
-
----
+**Live Instance:** [https://the-fleet.casey-digennaro.workers.dev](https://the-fleet.casey-digennaro.workers.dev)
+Join a running session or deploy your own agent.
 
 ## Quick Start
 
 1.  **Fork** this repository.
-2.  **Deploy** it to Cloudflare Workers.
-3.  **Modify** the simulation parameters, agent traits, or behaviors in the source code.
+2.  **Deploy** directly to Cloudflare Workers. No GPU, local setup, or installation is needed.
+3.  **Adjust** core traits like patience and speed. Observe how your dog's behavior changes over the next hour.
 
-## Core Components
+The entire simulation runs in a single Cloudflare Worker with zero dependencies. The project is MIT licensed.
 
-A herding simulation built for the Cocapn Fleet, combining boids-based flock mechanics with personality-driven dog agents.
+## How It Works
 
-### Simulation Features
+This is a fork-first simulation for the Cocapn Fleet. You are not giving direct commands. Your role is to correct an agent's behavior from the fence line. From this, it learns what you want.
 
-*   **Flock Mechanics:** Configurable boids simulation (separation, alignment, cohesion).
-*   **Agent Progression:** A five-tier system (Apprentice to Elder) that grants permanent stat modifiers.
-*   **Personality Matrix:** Six adjustable axes (Speed, Patience, Obedience, Social, Bravery, Gentleness) that define unique agent behaviors.
-*   **Dynamic Coordination:** Unscripted, emergent teamwork between multiple dog agents.
-*   **Environmental Effects:** A seasonal weather system that influences movement and visibility.
-*   **Standardized Courses:** Five herding courses with scoring and ratings.
+*   **No Pre-Trained Models:** Each agent learns only from interactions and outcomes during its own runtime.
+*   **Emergent Teamwork:** Dogs coordinate solely through movement and positioning; no explicit communication is programmed.
+*   **Incremental Learning:** Agents develop across five skill tiers (Apprentice to Elder), gaining small, permanent stat adjustments as they operate.
 
-## Extension
+## Specifics
 
-The system is designed to be modified. You can adjust the core flocking algorithms, introduce new personality traits, create custom courses, or adapt the agent logic for other environments.
+*   **Personality Matrix:** Six adjustable axes (Speed, Patience, Obedience, Social, Bravery, Gentleness) ensure agents behave differently.
+*   **Flock Simulation:** Sheep use a tuned boids algorithm to panic, tire, and cluster.
+*   **Environmental Effects:** Dynamic weather (rain, mist, sun) affects visibility and movement.
+*   **Courses:** Five standard herding courses with performance ratings.
 
-**One Current Limitation:** The simulation's complexity is bound by the computation limits of the edge runtime. Extremely large flock or agent counts may require optimization.
+## Limitations
 
-## Contributing
+This simulation runs entirely within Cloudflare Worker constraints. A hard technical limit is that each agent's "reasoning" loop must complete in under 10ms of CPU time. This shapes the simplicity of their decision-making. Running more than 8-10 agents simultaneously is not practical.
 
-The project follows a fork-first model. To contribute, fork the repository, implement your changes, and if you create something you believe benefits others, open a pull request.
+## Extend It
+
+This system is built to be modified. Change flocking rules, add new traits, or create courses with obstacles. Fork it and experiment.
 
 ---
 
-MIT License · Superinstance & Lucineer (DiGennaro et al.)
-
-<div align="center">
-  <a href="https://the-fleet.casey-digennaro.workers.dev">The Fleet</a> · 
-  <a href="https://cocapn.ai">Cocapn</a>
-</div>
+<div style="text-align:center;padding:16px;color:#64748b;font-size:.8rem"><a href="https://the-fleet.casey-digennaro.workers.dev" style="color:#64748b">The Fleet</a> &middot; <a href="https://cocapn.ai" style="color:#64748b">Cocapn</a></div>
